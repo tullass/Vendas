@@ -1,0 +1,34 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/template/Layout.xhtml">
+
+	<ui:define name="titulo"></ui:define>
+
+	<ui:define name="content">
+
+		<h:head>
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<title>Sobre</title>
+		</h:head>
+		<h:body>
+			<h:form id="formularioSobre">
+				<p:panel style="text-align:center">
+					<p:panelGrid columns="1">
+						
+						<p:spacer height="60" />
+						<p:outputLabel
+							value="Sistema feito em Java, por Stelio Miguel Langa!" />
+						<p:spacer weight="100" />
+						<p:outputLabel value="Contactos: StelioMiguel@gmail.com" />
+						<p:spacer weight="100" />
+						<p:outputLabel value="Telefone: 825563558" />
+					</p:panelGrid>
+				</p:panel>
+			</h:form>
+		</h:body>
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/template/Layout.xhtml">
+
+	<ui:define name="titulo"></ui:define>
+
+	<ui:define name="content">
+
+		<p:messages id="mensagem" closable="true" />
+		<h:form id="formTabela">
+			<p:panel>
+				<p:outputLabel value="Cliente: " />
+				<h:selectOneMenu styleClass="btn btn-defaulte"
+					value="#{vendaBean.cliente}"
+					converter="omnifaces.SelectItemsConverter">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione um cliente" />
+					<f:selectItems value="#{clienteBean.clientes}" var="cliente"
+						itemValue="#{cliente}" itemLabel="#{cliente.pessoa.nome}" />
+				</h:selectOneMenu>
+
+				<p:outputLabel value="Funcionario: " />
+				<h:selectOneMenu styleClass="btn btn-defaulte"
+					value="#{vendaBean.funcionario}"
+					converter="omnifaces.SelectItemsConverter">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione um funcionario" />
+					<f:selectItems value="#{funcionarioBean.funcionarios}"
+						var="funcionario" itemValue="#{funcionario}"
+						itemLabel="#{funcionario.pessoa.nome}" />
+				</h:selectOneMenu>
+			</p:panel>
+			<br></br>
+			<br></br>
+			<p:panel>
+
+				<p:inputText value="#{vendaBean.codigo}" name="codigo"
+					placeholder="Digite o nome do produto" styleClass="btn btn-default"
+					style="width:86%;" />
+				<p:inputText style="width:5%;" value="#{vendaBean.quantidade}"
+					styleClass="btn btn-default" />
+				<h:commandButton value="Adicionar"
+					update=":mensagem :formTabela :formCadastro :formCrediario :formCD :formCC"
+					actionListener="#{vendaBean.adicionarItem()}"
+					styleClass="btn btn-default">
+				</h:commandButton>
+				<br></br>
+			</p:panel>
+
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+			<br></br>
+
+			<p:panel>
+
+				<!--  Criação de tabela com prime faces  -->
+				<h:dataTable id="tabela" emptyMessage="Nenhum registro encontrado"
+					value="#{vendaBean.itens}" var="item"
+					styleClass="table table-striped table-bordered">
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#" />
+						</f:facet>
+						<h:outputText value="#{item.produto.codigo}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Descricao" />
+						</f:facet>
+						<h:outputText value="#{item.produto.descricao}" />
+					</h:column>
+
+
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Qtd." />
+						</f:facet>
+						<h:outputText value="#{item.quantidade}" />
+					</h:column>
+
+
+
+
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Preco" />
+						</f:facet>
+						<h:outputText value="#{item.produto.preco}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText />
+						</f:facet>
+						<h:outputText />
+					</h:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText />
+						</f:facet>
+						<h:outputText />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText />
+						</f:facet>
+						<h:outputText />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText />
+						</f:facet>
+						<h:outputText />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText />
+						</f:facet>
+						<h:outputText />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Preco Parcial" />
+						</f:facet>
+						<h:outputText value="#{item.valorParcial}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText />
+						</f:facet>
+						<h:outputText />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText />
+						</f:facet>
+						<h:outputText />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Accoes" />
+						</f:facet>
+
+						<!-- botão só despara se  dialogo for confirmado positivamente-->
+						<h:commandButton styleClass="btn btn-default" value="Remove"
+							actionListener="#{vendaBean.excluir}"
+							update=":mensagem :formTabela">
+
+							<f:attribute name="itemSelecionado" value="#{item}" />
+						</h:commandButton>
+
+					</p:column>
+
+				</h:dataTable>
+			</p:panel>
+			<br></br>
+			<br><br></br> <br></br> <br></br></br>
+			<br></br>
+			<br></br>
+			<p:commandButton styleClass="btn-default"
+				update=":formCadastro :formTabela :mensagem " icon="ui-icon-refresh" />
+			<p:outputLabel value="Valor Total: " />
+			<h:inputText styleClass="btn btn-default" id="preco" disabled="true"
+				size="8" value="#{vendaBean.valorTotal}" />
+
+
+
+			<p:commandButton styleClass="btn-default"
+				oncomplete="PF('dialogoDinheiro').show();"
+				update=":formCadastro :formTabela :mensagem " value="Dinheiro" />
+			<p:commandButton styleClass="btn-default"
+				oncomplete="PF('dialogoCrediario').show();"
+				update=":formCrediario :formTabela :mensagem " value="Crediario" />
+			<p:commandButton styleClass="btn-default"
+				oncomplete="PF('dialogoCD').show();"
+				update=":formCD :formTabela :mensagem " value="Cartão D" />
+			<p:commandButton styleClass="btn-default"
+				oncomplete="PF('dialogoCC').show();"
+				update=" :formCC :formTabela :mensagem " value="Cartão C" />
+
+			<!-- janela de confirmação global, para qualquer confirmação na página -->
+
+
+		</h:form>
+
+		<!--  janela de dialogo com prime faces para dinheiro  -->
+		<p:dialog widgetVar="dialogoDinheiro"
+			header="Finalizar Venda no dinheiro" closable="false" modal="true"
+			resizable="false">
+			<h:form id="formCadastro">
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Valor Total: " />
+					<h:inputText disabled="true" size="8"
+						value="#{vendaBean.valorTotal}" />
+
+					<p:commandButton update=":formCadastro :mensagem"
+						actionListener="#{vendaBean.calcularTroco()}"
+						value="Calcular troco" />
+					<h:inputText autocomplete="off" size="8"
+						value="#{vendaBean.dinheiro}">
+						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+					</h:inputText>
+
+					<p:outputLabel value="Troco: " />
+
+					<h:inputText id="troco" size="8" disabled="true"
+						value="#{vendaBean.troco}">
+						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+					</h:inputText>
+					<h:commandButton oncomplete="PF('dialogoDinheiro').hide();"
+						actionListener="#{vendaBean.salvarVendaDinheiro()}"
+						update=":formTabela" value="Finalizar" />
+					<p:commandButton oncomplete="PF('dialogoDinheiro').hide();"
+						value="Cancelar" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+
+		<!--  janela de dialogo com prime faces para Crediario  -->
+		<p:dialog widgetVar="dialogoCrediario"
+			header="Finalizar Venda no Crediario" closable="false" modal="true"
+			resizable="false">
+			<h:form id="formCrediario">
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Valor Total: " />
+					<h:inputText disabled="true" size="8"
+						value="#{vendaBean.valorTotal}" />
+
+					<p:commandButton actionListener="#{vendaBean.calcularParcelas()}"
+						update=":formCrediario :mensagem" value="Numero De Parcelas" />
+					<h:inputText autocomplete="off" size="8"
+						value="#{vendaBean.numeroDeParcelas}" />
+
+					<p:outputLabel value="Forma de pagamento: " />
+
+					<h:inputText id="formaDePagamento" size="8" disabled="true"
+						value="#{vendaBean.numeroDeParcelas} de #{vendaBean.parcela}" />
+					<p:commandButton
+						actionListener="#{vendaBean.salvarVendaCrediario()}"
+						oncomplete="PF('dialogoCrediario').hide();"
+						update=":formTabela :mensagem" value="Finalizar" />
+					<p:commandButton oncomplete="PF('dialogoCrediario').hide();"
+						value="Cancelar" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+
+		<!--  janela de dialogo com prime faces para CD  -->
+		<p:dialog widgetVar="dialogoCD"
+			header="Finalizar Venda no Cartão de Débito" closable="false"
+			modal="true" resizable="false">
+			<h:form id="formCD">
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Valor Total: " />
+					<h:inputText disabled="true" size="8"
+						value="#{vendaBean.valorTotal}" />
+
+					<p:commandButton actionListener="#{vendaBean.salvarVendaCD()}"
+						oncomplete="PF('dialogoCD').hide();"
+						update=":formTabela :mensagem" value="Finalizar" />
+					<p:commandButton oncomplete="PF('dialogoCD').hide();"
+						value="Cancelar" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+
+		<!--  janela de dialogo com prime faces para CC -->
+		<p:dialog widgetVar="dialogoCC"
+			header="Finalizar Venda no Cartão de Credito" closable="false"
+			modal="true" resizable="false">
+			<h:form id="formCC">
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Valor Total: " />
+					<h:inputText disabled="true" size="8"
+						value="#{vendaBean.valorTotal}" />
+
+					<p:commandButton actionListener="#{vendaBean.salvarVendaCC()}"
+						oncomplete="PF('dialogoCC').hide();"
+						update=":formTabela :mensagem" value="Finalizar" />
+					<p:commandButton oncomplete="PF('dialogoCC').hide();"
+						value="Cancelar" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>

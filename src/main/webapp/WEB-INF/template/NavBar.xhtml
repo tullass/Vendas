@@ -1,0 +1,46 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+
+	<h:outputStylesheet library="bootstrap" name="css/bootstrap.css" />
+
+	<h:outputStylesheet library="dist" name="css/AdminLTE2.css" />
+	<!-- 	<h:outputStylesheet library="dist" name="css/skins/skin-blue.min.css" /> -->
+
+
+
+	<a href="#" class="sidebar-toggle" data-toggle="offcanvas"
+		role="button"> <span class="sr-only">Toggle navigation</span>
+	</a>
+	<!-- Navbar Right Menu -->
+	<div class="navbar-custom-menu">
+		<ul class="nav navbar-nav">
+			<li class="dropdown user user-menu">
+				<!-- Menu Toggle Button --> <a href="#" class="dropdown-toggle"
+				data-toggle="dropdown"><i class="fa fa-user " /> <span
+					class="hidden-xs">Bem vindo</span> </a>
+				<ul class="dropdown-menu">
+					<!-- The user image in the menu -->
+
+
+					<li class="user-footer">
+						<div class="pull-left">
+							<h:link class="btn btn-default btn-flat"
+								outcome="/pages/usuarios.xhtml">Users</h:link>
+						</div>
+						<div class="pull-right">
+							<h:link class="btn btn-default btn-flat"
+								outcome="/pages/sobre.xhtml">Sobre</h:link>
+						</div>
+
+					</li>
+				</ul>
+			</li>
+
+
+		</ul>
+	</div>
+
+
+</ui:composition>

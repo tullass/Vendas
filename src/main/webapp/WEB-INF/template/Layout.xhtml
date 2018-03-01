@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<title>Teste</title>
+	<f:facet name="first">
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+	</f:facet>
+
+
+	<h:outputStylesheet library="dist" name="css/skins/skin-blue2.css" />
+
+</h:head>
+
+<h:body class="hold-transition skin-blue sidebar-mini">
+
+	<div class="wrapper">
+
+		<header class="main-header">
+
+			<!-- Logo -->
+			<a href="Error404.xhtml" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
+				<span class="logo-mini"><b>G</b>BL</span> <!-- logo for regular state and mobile devices -->
+				<span class="logo-lg"><b>Gambol</b></span>
+			</a>
+			<nav class="navbar navbar-static-top" role="navigation">
+				<ui:include src="/WEB-INF/template/NavBar.xhtml" />
+			</nav>
+		</header>
+		<aside class="main-sidebar">
+			<section class="sidebar">
+				<ui:include src="MenuLateral.xhtml" />
+			</section>
+		</aside>
+
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1>
+					<ui:insert name="titulo" />
+				</h1>
+			</section>
+			<section class="content">
+				<ui:insert name="content" />
+			</section>
+		</div>
+		<ui:include src="Footer.xhtml" />
+		<div class="control-sidebar-bg"></div>
+	</div>
+	<h:outputScript library="primefaces" name="jquery/jquery.js" />
+
+	<script type="text/javascript"
+		src="#{request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript"
+		src="#{request.contextPath}/resources/dist/js/app.min.js"></script>
+
+</h:body>
+
+</html>

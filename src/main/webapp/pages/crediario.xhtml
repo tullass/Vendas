@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/template/Layout.xhtml">
+
+	<ui:define name="titulo"></ui:define>
+
+	<ui:define name="content">
+		<style>
+h4 {
+	display: block;
+	font-size: 2em;
+	margin-top: 0.67em;
+	margin-bottom: 0.67em;
+	margin-left: 0;
+	margin-right: 0;
+	font-weight: bold;
+}
+</style>
+		<p:messages id="mensagem" closable="true" />
+		<h:form id="formTabela">
+			<p:panel>
+				<p:inputText value="#{crediarioBean.codigoo}" style="width:86%;"
+					styleClass="table table-striped table-bordered"
+					placeholder="Pesquise pelo nome do Cliente" />
+				<p:commandButton update=":formTabela :mensagem checkboxDT"
+					styleClass="btn btn-default"
+					actionListener="#{crediarioBean.procurarParcelas()}" value="Enviar" />
+
+				<h4>Vendas</h4>
+
+				<p:panel header="VENDAS">
+
+					<!--  Criação de tabela com prime faces  -->
+					<p:dataTable id="checkboxDT" scrollable="true" scrollHeight="300"
+						emptyMessage="Nenhum registro encontrado"
+						styleClass="table table-striped table-bordered"
+						value="#{crediarioBean.parcelas}" var="parcela"
+						selection="#{crediarioBean.parcelasSelecionadas}"
+						rowKey="#{parcela.codigo}">
+
+						<p:column selectionMode="multiple"
+							style="width:16px;text-align:center" />
+
+						<p:column headerText="Cliente">
+							<h:outputText value="#{parcela.cliente.pessoa.nome}" />
+						</p:column>
+						<p:column headerText="Código de Parcela">
+							<h:outputText value="#{parcela.codigo}" />
+						</p:column>
+
+						<p:column headerText="Data">
+							<h:outputText value="#{parcela.venda.horario}" />
+						</p:column>
+
+						<p:column headerText="Vencimento">
+							<h:outputText value="#{parcela.vencimento}" />
+						</p:column>
+
+						<p:column headerText="Nº">
+							<h:outputText value="#{parcela.valorETotal}" />
+						</p:column>
+
+						<p:column headerText="Valor">
+							<h:outputText value="#{parcela.valor}" />
+						</p:column>
+
+					</p:dataTable>
+					<p:commandButton oncomplete="PF('dialogoD').show();"
+						styleClass="btn btn-default"
+						actionListener="#{crediarioBean.mostrarValorTotal()}"
+						update=":formTabela :formDinheiro" value="Dinheiro" />
+					<p:commandButton oncomplete="PF('dialogoCD').show();"
+						styleClass="btn btn-default"
+						actionListener="#{crediarioBean.mostrarValorTotal()}"
+						update=":formTabela :formCD" value="Cartão de Débito" />
+					<p:commandButton oncomplete="PF('dialogoCC').show();"
+						styleClass="btn btn-default"
+						actionListener="#{crediarioBean.mostrarValorTotal()}"
+						update=":formTabela :formCC" value="Cartão de Crédito" />
+
+
+
+				</p:panel>
+			</p:panel>
+		</h:form>
+
+		<!--  janela de dialogo com prime faces para dinheiro  -->
+		<p:dialog widgetVar="dialogoD" header="Finalizar" closable="false"
+			modal="true" resizable="false">
+			<h:form id="formDinheiro">
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Valor Total: " />
+					<h:inputText disabled="true" size="8"
+						value="#{crediarioBean.valorTotal}">
+						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+					</h:inputText>
+
+					<p:commandButton update=" :mensagem :formDinheiro"
+						actionListener="#{crediarioBean.mostrarTroco()}"
+						value="Calcular troco" />
+					<h:inputText autocomplete="off" size="8"
+						value="#{crediarioBean.valorEmDinheiro}">
+						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+					</h:inputText>
+
+					<p:outputLabel value="Troco: " />
+					<h:inputText id="troco" size="8" disabled="true"
+						value="#{crediarioBean.troco}">
+						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+					</h:inputText>
+
+					<p:commandButton oncomplete="PF('dialogoD').hide();"
+						actionListener="#{crediarioBean.excluirParcelaD()}"
+						update=":formTabela :mensagem" value="Finalizar" />
+					<p:commandButton oncomplete="PF('dialogoD').hide();"
+						value="Cancelar" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<!--  janela de dialogo com prime faces para cartão de debito -->
+		<p:dialog widgetVar="dialogoCD" header="Finalizar" closable="false"
+			modal="true" resizable="false">
+			<h:form id="formCD">
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Valor Total: " />
+					<h:inputText disabled="true" size="8"
+						value="#{crediarioBean.valorTotal}">
+						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+					</h:inputText>
+
+					<p:commandButton oncomplete="PF('dialogoCD').hide();"
+						actionListener="#{crediarioBean.excluirParcelaCD()}"
+						update=":formTabela :mensagem" value="Finalizar" />
+					<p:commandButton oncomplete="PF('dialogoCD').hide();"
+						value="Cancelar" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<!--  janela de dialogo com prime faces para cartão -->
+		<p:dialog widgetVar="dialogoCC" header="Finalizar" closable="false"
+			modal="true" resizable="false">
+			<h:form id="formCC">
+				<h:panelGrid columns="2">
+					<p:outputLabel value="Valor Total: " />
+					<h:inputText disabled="true" size="8"
+						value="#{crediarioBean.valorTotal}">
+						<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+					</h:inputText>
+
+					<p:commandButton oncomplete="PF('dialogoCC').hide();"
+						actionListener="#{crediarioBean.excluirParcelaCC()}"
+						update=":formTabela :mensagem" value="Finalizar" />
+					<p:commandButton oncomplete="PF('dialogoCC').hide();"
+						value="Cancelar" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+
+	</ui:define>
+</ui:composition>

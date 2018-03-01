@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/template/Layout.xhtml">
+
+	<ui:define name="titulo"></ui:define>
+
+	<ui:define name="content">
+		<script>
+			function a() {
+				alert("Metodo nao implementado");
+			}
+		</script>
+		<style>
+h4 {
+	display: block;
+	font-size: 2em;
+	margin-top: 0.67em;
+	margin-bottom: 0.67em;
+	margin-left: 0;
+	margin-right: 0;
+	font-weight: bold;
+}
+</style>
+		<p:growl id="mensagem" />
+		<h:form id="formTabela">
+			<p:commandButton value="Novo" actionListener="#{pessoaBean.novo}"
+				oncomplete="PF('dialogoPessoa').show();" update=":formCadastro"
+				class="btn btn-primary ">
+				<f:actionListener
+					type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+			</p:commandButton>
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<p:panel>
+				<input type="text"></input>
+
+				<button type="button" class="btn btn-default" onclick="a()">
+					<span></span> Search
+				</button>
+				<h4>Lista das Pessoas</h4>
+				<!--  Criação de tabela com prime faces  -->
+				<h:dataTable value="#{pessoaBean.pessoas}" var="cursorPessoa"
+					styleClass="table table-striped table-bordered">
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Nome" />
+						</f:facet>
+						<h:outputText value="#{cursorPessoa.nome}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Rua" />
+						</f:facet>
+						<h:outputText value="#{cursorPessoa.rua}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Bairro" />
+						</f:facet>
+						<h:outputText value="#{cursorPessoa.bairro}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Telefone" />
+						</f:facet>
+						<h:outputText value="#{cursorPessoa.telefone}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Celular" />
+						</f:facet>
+						<h:outputText value="#{cursorPessoa.celular}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Email" />
+						</f:facet>
+						<h:outputText value="#{cursorPessoa.email}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Accoes" />
+						</f:facet>
+						<!-- botão só despara se  dialogo for confirmado positivamente-->
+						<h:commandButton value="Remover" class="btn btn-default"
+							actionListener="#{pessoaBean.excluir}"
+							update=":mensagem :formTabela">
+
+							<f:attribute name="pessoaSelecionada" value="#{cursorPessoa}" />
+						</h:commandButton>
+					</h:column>
+
+				</h:dataTable>
+				
+			</p:panel>
+		</h:form>
+
+		<!--  janela de dialogo com prime faces  -->
+		<p:dialog widgetVar="dialogoPessoa" closable="false" modal="true"
+			resizable="false" footer="Cadastrar Pessoas">
+			<h:form id="formCadastro">
+				<h:panelGrid columns="2">
+					Nome
+					
+					<h:inputText styleClass="btn btn-defaulte"
+						value="#{pessoaBean.pessoa.nome}" />
+					<br />
+Rua					<h:inputText styleClass="btn btn-defaulte"
+						value="#{pessoaBean.pessoa.rua}" />
+					<br />
+
+Bairro					<h:inputText styleClass="btn
+						btn-defaulte"
+						value="#{pessoaBean.pessoa.bairro}" />
+					<br />
+
+Telefone					<h:inputText styleClass="btn btn-defaulte" id="telefone"
+						value="#{pessoaBean.pessoa.telefone}" />
+					<br />
+
+Celular					<h:inputText styleClass="btn btn-defaulte" id="celular"
+						value="#{pessoaBean.pessoa.celular}" />
+					<br />
+
+Email					<h:inputText styleClass="btn btn-defaulte"
+						value="#{pessoaBean.pessoa.email}" />
+					<br />
+
+				</h:panelGrid>
+
+				<br></br>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar" class="btn btn-danger"
+						actionListener="#{pessoaBean.salvar()}"
+						update=":mensagem :formCadastro :formTabela" />
+					<p:commandButton value="fechar" class="btn btn-defaulte"
+						oncomplete="PF('dialogoPessoa').hide();" />
+				</h:panelGrid>
+
+
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>

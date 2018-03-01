@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--  BIBLIOTECAS  -->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/template/Layout.xhtml">
+
+	<ui:define name="titulo"></ui:define>
+
+	<ui:define name="content">
+		<style>
+h4 {
+	display: block;
+	font-size: 22px;
+	margin-top: 0.67em;
+	margin-bottom: 0.67em;
+	margin-left: 0;
+	margin-right: 0;
+	font-weight: bold;
+}
+</style>
+		<h:form id="formTabela">
+			<p:outputLabel value="Data Inicio:" />
+			<p:calendar pattern="dd/MM/yyyy HH:mm:ss"
+				value="#{relatorioVendasBean.dataInicio}" />
+			<p:outputLabel value="Data Fim:" />
+			<p:calendar pattern="dd/MM/yyyy HH:mm:ss"
+				value="#{relatorioVendasBean.dataFim}" />
+			<h:commandButton value="pesquisar" styleClass="btn btn-default"
+				actionListener="#{relatorioVendasBean.listarPorData()}"
+				update=":formTabela" />
+			<p:panel>
+				<br></br>
+				<br></br>
+				<br></br>
+
+				<br></br>
+				<h4>Vendas Efetuadas</h4>
+				<br></br>
+
+				<h:dataTable styleClass="table table-striped table-bordered"
+					value="#{relatorioVendasBean.vendas}" var="cursorVenda">
+
+					<p:column headerText="Código">
+						<h:outputText value="#{cursorVenda.cliente.pessoa.nome}" />
+					</p:column>
+					<p:column headerText="Código">
+						<h:outputText value="#{cursorVenda.codigo}" />
+					</p:column>
+					<p:column headerText="Data">
+						<h:outputText value="#{cursorVenda.horario}" />
+					</p:column>
+					<p:column headerText="Data">
+						<h:outputText value="#{cursorVenda.produto.descricao}" />
+					</p:column>
+
+					<p:column headerText="Valor">
+						<h:outputText value="#{cursorVenda.valorTotal}" />
+					</p:column>
+					<p:column headerText="Código">
+						<h:outputText value="#{cursorVenda.funcionario.pessoa.nome}" />
+					</p:column>
+				</h:dataTable>
+
+			</p:panel>
+		</h:form>
+
+		<!--
+	<p:chart id="grafico" type="bar" model="#{relatorioVendasBean.model}" />
+		-->
+
+	</ui:define>
+</ui:composition>

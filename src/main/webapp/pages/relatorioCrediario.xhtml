@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--  BIBLIOTECAS  -->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/template/Layout.xhtml">
+
+	<ui:define name="titulo"></ui:define>
+
+	<ui:define name="content">
+
+		<h:form id="formTabela">
+			<p:panel header="Relatório de crediario">
+				<h:dataTable styleClass="table table-striped table-bordered"
+					emptyMessage="Nenhum registro encontrado" rows="15"
+					paginator="true" value="#{relatorioCrediarioBean.crediarios}"
+					var="crediario">
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Cliente" />
+						</f:facet>
+						<h:outputText value="#{crediario.cliente.pessoa.nome}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Tell/Cell" />
+						</f:facet>
+						<h:outputText value="#{crediario.cliente.pessoa.telefone}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Hora" />
+						</f:facet>
+						<h:outputText value="#{crediario.venda.horario}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Parcelas" />
+						</f:facet>
+						<h:outputText value="#{crediario.valorETotal}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Vencimento" />
+						</f:facet>
+						<h:outputText value="#{crediario.vencimento}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="Valor" />
+						</f:facet>
+						<h:outputText value="#{crediario.valor}" />
+					</h:column>
+				</h:dataTable>
+
+			</p:panel>
+		</h:form>
+
+		<!--+
+	<p:chart id="grafico" type="bar" model="#{relatorioVendasBean.model}" />
+		-->
+
+	</ui:define>
+</ui:composition>
